@@ -13,6 +13,12 @@ dist-ssr
 *.local
 .env
 
+# Admin/utility scripts
+assign_trade_images.mjs
+check_listings.mjs
+generate_sitemap.mjs
+upsert_new_clients.mjs
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
