@@ -71,24 +71,33 @@ export default function Home() {
   return (
     <div>
       <Seo
-        title="Find a Tradie Near You"
-        description="Search Australia's directory of local trades businesses — painters, plumbers, electricians, builders and more. Free to browse, easy to contact."
+        title="Australian Trades Directory | Find Local Tradies Near You"
+        description="Find trusted local tradies across Australia. Browse painters, plumbers, electricians, builders, roofers and more. Free business listings and direct contact details."
         path="/"
-        jsonLd={{
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'AusTradie',
-          url: 'https://www.austradie.com.au',
-          description: "Australia's trades directory — find local painters, plumbers, electricians, builders and more.",
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: {
-              '@type': 'EntryPoint',
-              urlTemplate: 'https://www.austradie.com.au/trades/{search_term_string}',
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'AusTradie',
+            url: 'https://www.austradie.com.au',
+            description: "Australia's trades directory — find local painters, plumbers, electricians, builders and more.",
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: {
+                '@type': 'EntryPoint',
+                urlTemplate: 'https://www.austradie.com.au/trades/{search_term_string}',
+              },
+              'query-input': 'required name=search_term_string',
             },
-            'query-input': 'required name=search_term_string',
           },
-        }}
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'AusTradie',
+            url: 'https://www.austradie.com.au',
+            logo: 'https://www.austradie.com.au/logo.png',
+          },
+        ]}
       />
 
       {/* Hero */}
@@ -107,7 +116,7 @@ export default function Home() {
             Australia's Trade Directory
           </span>
           <h1 className="mt-4 text-4xl font-extrabold sm:text-5xl">
-            Find a <span className="text-gold-light">tradie</span> near you
+            Find a local <span className="text-gold-light">tradie</span> near you across Australia
           </h1>
           <p className="mt-3 text-lg text-gray-300">
             Search hundreds of trusted trades businesses across Australia
