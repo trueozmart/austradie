@@ -165,7 +165,7 @@ export default function Home() {
         <p className="mx-auto mt-2 max-w-md text-center text-sm text-gray-500">
           Pick a trade to see local businesses near you
         </p>
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
+        <div className="mt-8 grid grid-cols-3 gap-4">
           {CATEGORIES.map((c) => {
             const Icon = CATEGORY_ICONS[c.slug];
             return (
@@ -190,7 +190,7 @@ export default function Home() {
       {/* How it works */}
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="text-center text-2xl font-bold text-navy">How it works</h2>
-        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="mt-6 grid grid-cols-3 gap-4">
           {[
             {
               step: '1',
