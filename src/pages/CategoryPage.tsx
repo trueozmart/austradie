@@ -38,7 +38,7 @@ export default function CategoryPage() {
     itemListElement: listings.map((l, i) => ({
       '@type': 'ListItem',
       position: (page - 1) * 20 + i + 1,
-      url: `https://aussietradies.com.au/listing/${l.id}/${slugify(l.name)}`,
+      url: `https://www.austradie.com.au/listing/${l.id}/${slugify(l.name)}`,
       name: l.name,
     })),
   };

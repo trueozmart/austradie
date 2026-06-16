@@ -20,4 +20,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://austradie.com.au/sitemap.xml
+Sitemap: https://www.austradie.com.au/sitemap.xml

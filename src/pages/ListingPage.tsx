@@ -54,12 +54,34 @@ export default function ListingPage() {
     [listing.suburb, listing.state].filter(Boolean).join(', ') || 'Australia'
   }. Contact details, address and reviews.`;
 
-  const jsonLd = {
+  // Map category to the most specific schema.org type
+  const SCHEMA_TYPE: Record<string, string> = {
+    Painter: 'HousePainter',
+    Plumber: 'Plumber',
+    Electrician: 'Electrician',
+    Roofer: 'RoofingContractor',
+    Builder: 'GeneralContractor',
+    Handyman: 'HomeAndConstructionBusiness',
+    Carpenter: 'Carpenter',
+    Plasterer: 'HomeAndConstructionBusiness',
+    Tiler: 'HomeAndConstructionBusiness',
+    Landscaper: 'LandscapeService',
+    Concreter: 'HomeAndConstructionBusiness',
+  };
+
+  const websiteUrl = listing.website_url
+    ? listing.website_url.startsWith('http') ? listing.website_url : `https://${listing.website_url}`
+    : undefined;
+
+  const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': SCHEMA_TYPE[listing.category] ?? 'LocalBusiness',
     name: listing.name,
-    image: listing.image_url || undefined,
+    image: listing.image_url ? `https://www.austradie.com.au${listing.image_url}` : undefined,
     telephone: listing.phone || undefined,
+    description: listing.summary || description,
+    url: websiteUrl ?? `${SITE_URL}${path}`,
+    ...(websiteUrl ? { sameAs: [`${SITE_URL}${path}`] } : {}),
     address: {
       '@type': 'PostalAddress',
       streetAddress: listing.address || undefined,
@@ -68,13 +90,27 @@ export default function ListingPage() {
       postalCode: listing.postcode || undefined,
       addressCountry: 'AU',
     },
-    url: listing.is_corepages_client
-      ? listing.website_url
-        ? listing.website_url.startsWith('http')
-          ? listing.website_url
-          : `https://${listing.website_url}`
-        : undefined
-      : `${SITE_URL}${path}`,
+    areaServed: {
+      '@type': 'State',
+      name: listing.state || 'Australia',
+    },
+    ...(listing.testimonials?.length ? {
+      review: listing.testimonials.map(t => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: t.author },
+        reviewBody: t.text,
+      })),
+    } : {}),
+    ...(listing.services?.length ? {
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services',
+        itemListElement: listing.services.map(s => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: s },
+        })),
+      },
+    } : {}),
   };
 
   const isPremium = listing.is_corepages_client;

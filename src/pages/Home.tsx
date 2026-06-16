@@ -74,6 +74,21 @@ export default function Home() {
         title="Find a Tradie Near You"
         description="Search Australia's directory of local trades businesses — painters, plumbers, electricians, builders and more. Free to browse, easy to contact."
         path="/"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'AusTradie',
+          url: 'https://www.austradie.com.au',
+          description: "Australia's trades directory — find local painters, plumbers, electricians, builders and more.",
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: {
+              '@type': 'EntryPoint',
+              urlTemplate: 'https://www.austradie.com.au/trades/{search_term_string}',
+            },
+            'query-input': 'required name=search_term_string',
+          },
+        }}
       />
 
       {/* Hero */}
