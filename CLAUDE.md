@@ -7,15 +7,14 @@ GitHub: https://github.com/trueozmart/austradie
 Deployed via Vercel (auto-deploys from main).
 
 ## Branch workflow
-**Always start each session on a feature branch — never commit directly to main.**
+**Always commit directly to main.** No feature branches, no PRs.
+Vercel auto-deploys to production on every push to main.
 
 ```bash
 git checkout main && git pull origin main
-git checkout -b session/YYYY-MM-DD
+# make changes, then:
+git add <files> && git commit -m "..." && git push origin main
 ```
-
-At the end of the session, open a PR with `gh pr create` targeting `main`.
-Vercel will preview-deploy the branch automatically.
 
 ## Key env vars (in .env)
 - `VITE_SUPABASE_URL`
