@@ -14,7 +14,8 @@ interface SeoProps {
 
 export default function Seo({ title, description, path, ogImage, jsonLd }: SeoProps) {
   const url = `${SITE_URL}${path}`;
-  const fullTitle = `${title} | ${SITE_NAME}`;
+  // Don't double-append brand if title already contains a pipe separator
+  const fullTitle = title.includes('|') ? title : `${title} | ${SITE_NAME}`;
   const image = ogImage ?? DEFAULT_OG_IMAGE;
 
   return (
