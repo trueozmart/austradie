@@ -9,13 +9,12 @@ interface SeoProps {
   description: string;
   path: string;
   ogImage?: string;
-  jsonLd?: object;
+  jsonLd?: object | object[];
 }
 
 export default function Seo({ title, description, path, ogImage, jsonLd }: SeoProps) {
   const url = `${SITE_URL}${path}`;
-  // Don't double-append brand if title already contains a pipe separator
-  const fullTitle = title.includes('|') ? title : `${title} | ${SITE_NAME}`;
+  const fullTitle = `${title} | ${SITE_NAME}`;
   const image = ogImage ?? DEFAULT_OG_IMAGE;
 
   return (
@@ -26,10 +25,10 @@ export default function Seo({ title, description, path, ogImage, jsonLd }: SeoPr
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
@@ -40,7 +39,9 @@ export default function Seo({ title, description, path, ogImage, jsonLd }: SeoPr
       <meta name="twitter:image" content={image} />
 
       {jsonLd && (
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(Array.isArray(jsonLd) ? { '@context': 'https://schema.org', '@graph': jsonLd } : jsonLd)}
+        </script>
       )}
     </Helmet>
   );
